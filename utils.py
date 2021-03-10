@@ -3,7 +3,7 @@ import platform
 from typing import Dict, List
 import os, sys
 
-DEBUG = False
+DEBUG = False or os.getenv("DEBUG")
 OUT = None if DEBUG else subprocess.DEVNULL
 
 def sort_out_windows_colours():
@@ -50,11 +50,13 @@ else:
 
 
 def set_list(context: str, list_name: str, contents: Dict):
-    run_talon([
+    cmd = [
         f"ctx = registry.contexts['{context}']",
         f"ctx.lists['user.{list_name}'] = {contents}",
-        f"print(ctx.lists['user.{list_name}'])"
-    ])
+    ]
+    if DEBUG:
+        cmd.append(f"print(ctx.lists['user.{list_name}'])")
+    run_talon(cmd)
 
 def run_command(cmd: List[str]) -> str:
     proc = subprocess.run(cmd, capture_output=True)
