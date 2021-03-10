@@ -24,7 +24,7 @@ with the following items being added to a list:
 ## Instructions
 1. Clone this repo somewhere other than your talon user directory
 2. Declare lists in your user directory to accept the data
-3. Open `status.py` and set the `GIT_STATUS_ITEMS_CONTEXT` and `GIT_STATUS_ITEMS_LIST` variables. For example if I have `mod.list("git_status_items")` in `user/apps/terminal/git` then they should be `user.apps.terminal.git` and `git_status_items` respectively. You can get a list of all contexts by calling `registry.contexts` in the REPL.
+3. Open `status.py` and set the `GIT_STATUS_ITEMS_CONTEXT` and `GIT_STATUS_ITEMS_LIST` variables. For example if I have `user/apps/terminal/git.py` containing `mod.list("git_status_items")` then they should be `user.apps.terminal.git` and `git_status_items` respectively. You can get a list of all contexts by calling `registry.contexts` in the REPL.
 4. Create a bash alias to run `status.py`, e.g. `alias "git_status"="python3 ~/path/status.py"`
 5. Create some commands to use the list of items, e.g.
 ```
