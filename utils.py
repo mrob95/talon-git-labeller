@@ -18,10 +18,10 @@ def sort_out_windows_colours():
     windll.kernel32.SetConsoleMode(c_int(stdout_handle), mode)
 
 
-raw_digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+raw_digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 raw_teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 
-digits = {i: name for i, name in enumerate(raw_digits, 1)}
+digits = {i: name for i, name in enumerate(raw_digits)}
 teens = {i: name for i, name in enumerate(raw_teens, 10)}
 
 def map_numbers_to_spoken(n: int) -> str:
