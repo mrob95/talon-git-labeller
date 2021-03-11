@@ -29,7 +29,7 @@ for line in out.strip().split("\n"):
     if line in colour_map:
         colour = colour_map[line]
 
-    contains_file = re.match(r"\s+[^(\s].+?", line)
+    contains_file = re.match(r"^\s+[^(\s]", line)
     if contains_file:
         # first group is e.g. 'modified:' or 'deleted:'
         file_name_match = re.match(r"^\s+([a-z]+:\s+)?(.+?)$", line)
