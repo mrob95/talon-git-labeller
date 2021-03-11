@@ -1,6 +1,8 @@
 from utils import sort_out_windows_colours, map_numbers_to_spoken, set_list, run_command
 import re
 import platform
+import sys
+
 
 GIT_STATUS_ITEMS_CONTEXT = "user.apps.terminal.git"
 GIT_STATUS_ITEMS_LIST    = "git_status_items"
@@ -42,5 +44,7 @@ for line in out.strip().split("\n"):
             print(line)
     else:
         print(line)
+
+sys.stdout.flush()
 
 set_list(GIT_STATUS_ITEMS_CONTEXT, GIT_STATUS_ITEMS_LIST, file_map)

@@ -1,5 +1,6 @@
 from utils import sort_out_windows_colours, map_numbers_to_spoken, set_list, run_command
 import re
+import sys
 import platform
 
 GIT_STATUS_ITEMS_CONTEXT = "user.apps.terminal.git"
@@ -17,7 +18,7 @@ branch_num = 1
 branch_map = {}
 colour = ""
 
-for line in out.strip().split("\n"):
+for line in out.rstrip().split("\n"):
     if line.startswith("*"):
         # Current branch
         branch = re.match(r"\*\s(.+?)$", line).group(1).strip()
@@ -29,5 +30,7 @@ for line in out.strip().split("\n"):
     branch_map[spoken] = branch
     print(f" {branch_num: >2}. {line_to_print}")
     branch_num += 1
+
+sys.stdout.flush()
 
 set_list(GIT_STATUS_ITEMS_CONTEXT, GIT_STATUS_ITEMS_LIST, branch_map)
