@@ -61,4 +61,6 @@ def set_list(context: str, list_name: str, contents: Dict):
 def run_command(cmd: List[str]) -> str:
     proc = subprocess.run(cmd, capture_output=True)
     out = proc.stdout.decode("utf-8")
-    return out
+    err = proc.stderr.decode("utf-8")
+    # Can these be mixed?
+    return out or err
