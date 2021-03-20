@@ -37,7 +37,7 @@ def git_status() -> Dict[str, str]:
             # first group is e.g. 'modified:' or 'deleted:'
             file_name_match = re.match(r"^\s+([a-z\s]+:\s+)?(.+?)( \(.+?\))?$", line)
             if file_name_match:
-                file_name = file_name_match.group(2).strip("/")
+                file_name = file_name_match.group(2)
                 spoken = map_numbers_to_spoken(file_num)
                 file_map[spoken] = file_name
                 print(f"  {file_num: >2}.   {colour}{line.strip()}{COLOUR_RESET}")
