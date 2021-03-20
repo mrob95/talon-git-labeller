@@ -22,7 +22,7 @@ COLOUR_MAP = {
 }
 
 def git_status() -> Dict[str, str]:
-    out = run_command(["git", "status"])
+    out = run_command(["git", "status", *sys.argv[1:]])
 
     file_num = 1
     file_map = {}

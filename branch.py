@@ -14,7 +14,7 @@ COLOUR_GREEN = "\x1b[32m"
 COLOUR_RESET = "\x1b[0m"
 
 def git_branch() -> Dict[str, str]:
-    out = run_command(["git", "branch"])
+    out = run_command(["git", "branch", *sys.argv[1:]])
 
     branch_num = 1
     branch_map = {}
