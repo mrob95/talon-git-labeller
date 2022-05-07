@@ -23,10 +23,17 @@ with the following items being added to a list:
 
 ## Instructions
 1. Clone this repo somewhere other than your talon user directory
-2. Declare lists in your user directory to accept the data
-3. Open `status.py` and set the `GIT_STATUS_ITEMS_CONTEXT` and `GIT_STATUS_ITEMS_LIST` variables. For example if I have `user/apps/terminal/git.py` containing `mod.list("git_status_items")` then they should be `user.apps.terminal.git` and `git_status_items` respectively. You can get a list of all contexts by calling `registry.contexts` in the REPL.
-4. Create a bash alias to run `status.py`, e.g. `alias "git_status"="python3 ~/path/status.py"`
-5. Create some commands to use the list of items, e.g.
+2. Create shell aliases to run main.py, passing the git command (branch or status) and the path to a python file in your user directory where the list will be written. e.g.
+```
+# Windows
+alias "git_status"="python ~/Documents/GitHub/git_passthrough/main.py status ~/AppData/Roaming/talon/user/git_pt/status.py"
+alias "git_branch"="python ~/Documents/GitHub/git_passthrough/main.py branch ~/AppData/Roaming/talon/user/git_pt/branch.py"
+
+# WSL
+alias git_status="python3.9 ~/talon-git-labeller/main.py status /mnt/c/Users/Mike/AppData/Roaming/talon/user/git_pt/status.py"
+alias git_branch="python3.9 ~/talon-git-labeller/main.py branch /mnt/c/Users/Mike/AppData/Roaming/talon/user/git_pt/branch.py"
+```
+3. Create some commands to use the `git_status_items` and `git_branch_items` lists, e.g.:
 ```
 git status: "git_status\n"
 git {user.git_actions} {user.git_status_items} [(and {user.git_status_items})+]:
