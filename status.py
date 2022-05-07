@@ -1,5 +1,5 @@
 from typing import Dict
-from utils import sort_out_windows_colours, map_numbers_to_spoken, set_list, run_command
+from utils import dump_list_file, sort_out_windows_colours, map_numbers_to_spoken, run_command
 import re
 import platform
 import sys
@@ -22,7 +22,7 @@ COLOUR_MAP = {
 }
 
 def git_status() -> Dict[str, str]:
-    out = run_command(["git", "status", *sys.argv[1:]])
+    out = run_command(["git", "status"])
 
     file_num = 1
     file_map = {}
@@ -52,5 +52,6 @@ def git_status() -> Dict[str, str]:
     return file_map
 
 if __name__ == '__main__':
+    assert len(sys.argv) == 2, "Usage: branch.py {talon list file location}"
     file_map = git_status()
-    set_list(GIT_STATUS_ITEMS_CONTEXT, GIT_STATUS_ITEMS_LIST, file_map)
+    dump_list_file(sys.argv[1], GIT_STATUS_ITEMS_LIST, file_map)

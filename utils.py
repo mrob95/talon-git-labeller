@@ -1,6 +1,6 @@
 import subprocess
 import platform
-from typing import Dict, List
+from typing import Dict, List, Optional
 import os, sys
 
 DEBUG = False or os.getenv("DEBUG")
@@ -34,33 +34,25 @@ def map_numbers_to_spoken(n: int) -> str:
         return text
 
 
-if platform.system().lower() == "windows":
-    TALON_RESOURCES = os.path.join(os.path.expandvars("%APPDATA%"), "talon", ".venv", "Scripts", ".resources")
-    TALON_DIR = open(TALON_RESOURCES, "r").read().strip()
-    TALON_PYTHON = os.path.join(TALON_DIR, "python.exe")
-    TALON_REPL = os.path.join(TALON_DIR, "repl.py")
-    def run_talon(cmds: List[str]):
-        cmd = "\n".join(cmds) + "\n"
-        subprocess.run([TALON_PYTHON, TALON_REPL], input=cmd.encode("utf-8"), stdout=OUT)
-else:
-    TALON_REPL = os.path.expanduser("~/.talon/bin/repl")
-    def run_talon(cmds: List[str]):
-        cmd = "\n".join(cmds) + "\n"
-        subprocess.run([TALON_REPL], input=cmd.encode("utf-8"), stdout=OUT)
-
-
-def set_list(context: str, list_name: str, contents: Dict):
-    cmd = [
-        f"ctx = registry.contexts['{context}']",
-        f"ctx.lists['user.{list_name}'] = {contents}",
-    ]
-    if DEBUG:
-        cmd.append(f"print(ctx.lists['user.{list_name}'])")
-    run_talon(cmd)
-
 def run_command(cmd: List[str]) -> str:
     proc = subprocess.run(cmd, capture_output=True)
     out = proc.stdout.decode("utf-8")
     err = proc.stderr.decode("utf-8")
     # Can these be mixed?
     return out or err
+
+LIST_FILE_TEMPLATE = """
+from talon import ui, Module, Context, registry, actions, imgui, cron, clip
+
+mod = Module()
+ctx = Context()
+
+mod.list("{list_name}")
+
+ctx.lists["user.{list_name}"] = {items}
+
+"""
+
+def dump_list_file(location: str, list_name: str, items: Dict):
+    with open(location, "w") as f:
+        f.write(LIST_FILE_TEMPLATE.format(list_name=list_name, items=items))
