@@ -70,7 +70,7 @@ COLOUR_RED   = "\x1b[31m"
 COLOUR_RESET = "\x1b[0m"
 
 
-def git_status() -> Dict[str, str]:
+def git_status(cmd: List[str]) -> Dict[str, str]:
     COLOUR_MAP = {
         "Changes to be committed:": COLOUR_GREEN,
         "Changes not staged for commit:": COLOUR_RED,
@@ -78,7 +78,7 @@ def git_status() -> Dict[str, str]:
         "Unmerged paths:": COLOUR_RED,
     }
 
-    out = run_command(["git", "status"])
+    out = run_command(["git", *cmd])
 
     file_num = 1
     file_map = {}
@@ -137,7 +137,10 @@ if __name__ == '__main__':
         branch_map = git_branch()
         dump_list_file(target, GIT_BRANCH_ITEMS_LIST, branch_map)
     elif cmd == "status":
-        file_map = git_status()
+        file_map = git_status(["status"])
+        dump_list_file(target, GIT_STATUS_ITEMS_LIST, file_map)
+    elif cmd == "stash_pop":
+        file_map = git_status(["stash", "pop"])
         dump_list_file(target, GIT_STATUS_ITEMS_LIST, file_map)
     else:
         raise ValueError(f"Unrecognised command {cmd}")
