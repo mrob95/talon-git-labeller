@@ -25,7 +25,7 @@ with the following items being added to a list:
 
 ## Instructions
 1. Clone this repo somewhere other than your talon user directory
-2. Create shell aliases to run main.py, passing the git command (branch or status) and the path to a python file in your user directory where the list will be written. e.g.
+2. Create shell aliases to run main.py, passing the git command (branch or status) and the path to a python file in your user directory where the list will be written. e.g. (set your own `labeller_path` and `talon_user_path` here)
 ```
 labeller_path="$ZPLUGINDIR/talon-git-labeller/main.py"
 talon_user_path="/mnt/c/Users/Mike/AppData/Roaming/talon/user/git-labeller"
