@@ -1,7 +1,9 @@
 # Git item labeller for Talon
+![Talon labeller demo gif](images/demo.gif)
+
 These scripts replace git commands, numbering items in the output and creating a talon list of the items so they can be referred to with voice commands. For example:
 ```
-$ git_status
+$ git status
 On branch master
 
 No commits yet
@@ -43,7 +45,7 @@ function git() {
 3. Create some commands to use the `git_status_items` and `git_branch_items` lists, e.g.:
 ```
 git status: "git_status\n"
-git {user.git_actions} {user.git_status_items} [(and {user.git_status_items})+]:
+git add {user.git_status_items} [(and {user.git_status_items})+]:
 	items = user.cat(git_status_items_list, "' '")
 	"git {git_actions} '{items}'"
 git go {user.git_status_items}: user.cd_directory_of(git_status_items)

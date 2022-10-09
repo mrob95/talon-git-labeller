@@ -47,7 +47,7 @@ def run_command(cmd: List[str]) -> str:
     return out or err
 
 LIST_FILE_TEMPLATE = """
-from talon import ui, Module, Context, registry, actions, imgui, cron, clip
+from talon import Module, Context
 
 mod = Module()
 ctx = Context()
