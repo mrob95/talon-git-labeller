@@ -25,13 +25,20 @@ with the following items being added to a list:
 1. Clone this repo somewhere other than your talon user directory
 2. Create shell aliases to run main.py, passing the git command (branch or status) and the path to a python file in your user directory where the list will be written. e.g.
 ```
-# Windows
-alias "git_status"="python ~/Documents/GitHub/git_passthrough/main.py status ~/AppData/Roaming/talon/user/git_pt/status.py"
-alias "git_branch"="python ~/Documents/GitHub/git_passthrough/main.py branch ~/AppData/Roaming/talon/user/git_pt/branch.py"
-
-# WSL
-alias git_status="python3.9 ~/talon-git-labeller/main.py status /mnt/c/Users/Mike/AppData/Roaming/talon/user/git_pt/status.py"
-alias git_branch="python3.9 ~/talon-git-labeller/main.py branch /mnt/c/Users/Mike/AppData/Roaming/talon/user/git_pt/branch.py"
+labeller_path="$ZPLUGINDIR/talon-git-labeller/main.py"
+talon_user_path="/mnt/c/Users/Mike/AppData/Roaming/talon/user/git-labeller"
+mkdir -p $talon_user_path
+function git() {
+    if [ "$1" = "status" ] && [ "$#" = "1" ]; then
+        python "$labeller_path" status "$talon_user_path/status.py"
+    elif [ "$1" = "stash" ] && [ "$2" = "pop" ] && [ "$#" = "2" ]; then
+        python "$labeller_path" stash_pop "$talon_user_path/status.py"
+    elif [ "$1" = "branch" ] && [ "$#" = "1" ]; then
+        python "$labeller_path" branch "$talon_user_path/branch.py"
+    else
+        command git "$@"
+    fi
+}
 ```
 3. Create some commands to use the `git_status_items` and `git_branch_items` lists, e.g.:
 ```
