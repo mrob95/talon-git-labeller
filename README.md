@@ -38,9 +38,12 @@ pipx install talon_git_labeller
     * `git stash pop` -> `git tl-stash-pop`
 4. Create some commands to use the `git_status_items` and `git_branch_items` lists in talon, e.g.:
 ```
-git status: "git_status\n"
-git add {user.git_status_items} [(and {user.git_status_items})+]:
-      items = user.cat(git_status_items_list, "' '")
-      "git {git_actions} '{items}'"
-git go {user.git_status_items}: user.cd_directory_of(git_status_items)
+git status: "git tl-status\n"
+git add {user.git_status_items}: "git add '{git_status_items}'"
+git diff {user.git_status_items}: "git diff '{git_status_items}'"
 git file {user.git_status_items}: "'{git_status_items}'"
+
+git branch: "git tl-branch\n"
+git checkout {user.git_branch_items}: "git checkout '{git_branch_items}'"
+```
+5. Use the commands by saying e.g. "git add one".
