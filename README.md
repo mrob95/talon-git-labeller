@@ -24,9 +24,19 @@ with the following items being added to a list:
 ```
 
 ## Instructions
-TODO
-
-3. Create some commands to use the `git_status_items` and `git_branch_items` lists, e.g.:
+1. Install [pipx](https://pypa.github.io/pipx/):
+```
+pip3 install pipx
+```
+2. Install the `talon_git_labeller` package globally:
+```
+pipx install talon_git_labeller
+```
+3. Switch to using the new git commands:
+    * `git status` -> `git tl-status`
+    * `git branch` -> `git tl-branch`
+    * `git stash pop` -> `git tl-stash-pop`
+4. Create some commands to use the `git_status_items` and `git_branch_items` lists in talon, e.g.:
 ```
 git status: "git_status\n"
 git add {user.git_status_items} [(and {user.git_status_items})+]:
