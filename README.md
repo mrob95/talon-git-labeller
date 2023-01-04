@@ -1,5 +1,5 @@
 # Git item labeller for Talon
-![Talon labeller demo gif](images/demo.gif)
+![Talon labeller demo gif](https://raw.githubusercontent.com/mrob95/talon-git-labeller/master/images/demo.gif)
 
 These scripts replace git commands, numbering items in the output and creating a talon list of the items so they can be referred to with voice commands. For example:
 ```
