@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/talon-git-labeller.svg)](https://badge.fury.io/py/talon-git-labeller)
+
 # Git item labeller for Talon
 ![Talon labeller demo gif](https://raw.githubusercontent.com/mrob95/talon-git-labeller/master/images/demo.gif)
 
