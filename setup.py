@@ -14,7 +14,7 @@ def get_long_description():
 
 setup(
     name="talon_git_labeller",
-    description="TODO",
+    description="Adds items to a talon list when certain git commands are executed, allowing files to be easily selected by voice.",
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
     author="Mike Roberts",
