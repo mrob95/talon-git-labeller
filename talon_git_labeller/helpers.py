@@ -1,6 +1,7 @@
 from pathlib import Path
 import subprocess
 from typing import List
+import os
 
 from talon_git_labeller.const import PLATFORM
 
@@ -42,7 +43,7 @@ def get_talon_user_path() -> Path:
     elif PLATFORM == "darwin":
         user_dir = Path("~/.talon/user")
     elif PLATFORM == "windows":
-        user_dir = Path("%APPDATA%/talon/user")
+        user_dir = Path(os.path.expandvars("%APPDATA%/talon/user"))
     else:
         raise NotImplementedError(f"Unexpected platform '{PLATFORM}'")
     return user_dir
