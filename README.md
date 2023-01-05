@@ -48,4 +48,4 @@ git file {user.git_status_items}: "'{git_status_items}'"
 git branch: "git tl-branch\n"
 git checkout {user.git_branch_items}: "git checkout '{git_branch_items}'"
 ```
-5. Use the commands by saying e.g. "git add one".
+5. Use the commands by saying e.g. "git add one" after using "git tl-status" in a git repository.

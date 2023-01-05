@@ -37,16 +37,15 @@ def get_talon_user_path() -> Path:
         if is_wsl:
             windows_appdata = run_command(["cmd.exe", "/C", "echo %APPDATA%"]).strip()
             unix_appdata = run_command(["wslpath", windows_appdata]).strip()
-            user_dir = Path(unix_appdata) / "talon" / "user"
+            return Path(unix_appdata) / "talon" / "user"
         else:
-            user_dir = Path("~/.talon/user")
+            return Path(os.path.expanduser("~/.talon/user"))
     elif PLATFORM == "darwin":
-        user_dir = Path("~/.talon/user")
+        return Path(os.path.expanduser("~/.talon/user"))
     elif PLATFORM == "windows":
-        user_dir = Path(os.path.expandvars("%APPDATA%/talon/user"))
+        return Path(os.path.expandvars("%APPDATA%/talon/user"))
     else:
         raise NotImplementedError(f"Unexpected platform '{PLATFORM}'")
-    return user_dir
 
 
 def sort_out_windows_colours():
