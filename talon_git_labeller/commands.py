@@ -2,7 +2,8 @@ from typing import List, Dict
 import sys
 import re
 
-from talon_git_labeller.helpers import run_command, map_numbers_to_spoken
+from talon_git_labeller.const import PLATFORM
+from talon_git_labeller.helpers import run_command, map_numbers_to_spoken, sort_out_windows_colours
 
 
 COLOUR_GREEN = "\x1b[32m"
@@ -19,6 +20,8 @@ def git_status(cmd: List[str]) -> Dict[str, str]:
     }
 
     out = run_command(["git", *cmd])
+    if PLATFORM == "windows":
+        sort_out_windows_colours()
 
     file_num = 1
     file_map = {}
@@ -50,6 +53,8 @@ def git_status(cmd: List[str]) -> Dict[str, str]:
 
 def git_branch() -> Dict[str, str]:
     out = run_command(["git", "branch"])
+    if PLATFORM == "windows":
+        sort_out_windows_colours()
 
     branch_map = {}
     for branch_num, line in enumerate(out.rstrip().split("\n"), 1):
