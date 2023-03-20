@@ -33,7 +33,7 @@ def run_command(cmd: List[str]) -> str:
 def get_talon_user_path() -> Path:
     if PLATFORM == "linux":
         with open("/proc/version") as f:
-            is_wsl = "microsoft" in f.read()
+            is_wsl = "microsoft" in f.read().lower()
         if is_wsl:
             windows_appdata = run_command(["cmd.exe", "/C", "echo %APPDATA%"]).strip()
             unix_appdata = run_command(["wslpath", windows_appdata]).strip()
