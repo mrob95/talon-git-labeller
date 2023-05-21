@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Tuple
 import sys
 import re
 
@@ -10,8 +10,7 @@ COLOUR_GREEN = "\x1b[32m"
 COLOUR_RED   = "\x1b[31m"
 COLOUR_RESET = "\x1b[0m"
 
-
-def git_status(cmd: List[str]) -> Dict[str, str]:
+def parse_status(out: str) -> Tuple[List[str], Dict[str, str]]:
     COLOUR_MAP = {
         "Changes to be committed:": COLOUR_GREEN,
         "Changes not staged for commit:": COLOUR_RED,
@@ -19,34 +18,38 @@ def git_status(cmd: List[str]) -> Dict[str, str]:
         "Unmerged paths:": COLOUR_RED,
     }
 
-    out = run_command(["git", *cmd])
-    if PLATFORM == "windows":
-        sort_out_windows_colours()
-
-    file_num = 1
+    lines = []
     file_map = {}
+    file_num = 1
     colour = ""
 
     for line in out.strip().split("\n"):
         if line in COLOUR_MAP:
             colour = COLOUR_MAP[line]
 
-        contains_file = re.match(r"^\s+[^(\s]", line)
-        if contains_file:
-            # first group is e.g. 'modified:' or 'deleted:'
-            file_name_match = re.match(r"^\s+([a-z\s]+:\s+)?(.+?)( \(.+?\))?$", line)
-            if file_name_match:
-                file_name = file_name_match.group(2)
-                spoken = map_numbers_to_spoken(file_num)
-                file_map[spoken] = file_name
-                print(f"  {file_num: >2}.   {colour}{line.strip()}{COLOUR_RESET}")
-                file_num += 1
-            else:
-                # Shouldn't ever hit this, means the regexes are missing something
-                print(line)
+        # first group is e.g. 'modified:' or 'deleted:'
+        file_name_match = re.match(r"^\t([a-z\s]+:\s+)?(.+?)( \(.+?\))?$", line)
+        if file_name_match:
+            file_name = file_name_match.group(2)
+            if file_name_match.group(1) and file_name_match.group(1).strip() == "renamed:":
+                _, _, file_name = file_name.rpartition(" -> ")
+            spoken = map_numbers_to_spoken(file_num)
+            file_map[spoken] = file_name
+            lines.append(f"  {file_num: >2}.   {colour}{line.strip()}{COLOUR_RESET}")
+            file_num += 1
         else:
-            print(line)
+            lines.append(line)
 
+    return lines, file_map
+
+
+def git_status(cmd: List[str]) -> Dict[str, str]:
+    out = run_command(["git", *cmd])
+    if PLATFORM == "windows":
+        sort_out_windows_colours()
+
+    lines, file_map = parse_status(out)
+    sys.stdout.write("\n".join(lines) + "\n")
     sys.stdout.flush()
     return file_map
 
